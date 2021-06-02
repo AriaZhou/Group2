@@ -227,7 +227,7 @@ RequestParser::parse_result RequestParser::consume(
       }
     case new_line_3:
       return (input == '\n') ? success : fail;
-    // TODO: parse body
+    // TODO: parse content
     default:
       return fail;
   }
