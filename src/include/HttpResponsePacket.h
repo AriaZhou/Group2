@@ -41,14 +41,13 @@ public:
 
   HttpResponsePacket();
   // Constract HttpResponsePacket via response status_code and content
-  HttpResponsePacket(const std::string& content,
-                     const status_type status_code = status_type::ok);
+  HttpResponsePacket(const std::string& content, const status_type status_code);
 
 public:
   // The protocol of the http response
   std::string protocol;
   // The status code of the http response
-  int status_code;
+  status_type status_code;
 
   // Serialize a http response packet into bytes
   std::unique_ptr<std::vector<boost::asio::const_buffer>> GetBytes();
