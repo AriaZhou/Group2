@@ -14,7 +14,4 @@
  * HttpPacket implementation
  */
 
-/**
- * @return string
- */
-virtual string HttpPacket::ToString() { return ""; }
+HttpPacket::HttpPacket() {}
