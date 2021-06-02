@@ -13,11 +13,3 @@
 /**
  * HttpRequestPacket implementation
  */
-
-/**
- * @param buffer
- * @return HttpRequestPacket
- */
-static HttpRequestPacket HttpRequestPacket::ParseBytes(vector<byte> buffer) {
-  return null;
-}
