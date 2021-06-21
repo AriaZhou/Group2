@@ -8,12 +8,12 @@
  * @version 0.0.1
  */
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 
 #include "RequestParser.h"
 #include "HttpRequestPacket.h"
 
-// TEST(RequestParserTest, ValidRequest) {
 TEST(RequestParserTest, ValidRequest) {
   HttpRequestPacket packet;
   RequestParser parser;
