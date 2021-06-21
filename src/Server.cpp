@@ -10,12 +10,9 @@
 
 #include "Server.h"
 
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/enable_shared_from_this.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/shared_ptr.hpp>
 #include <thread>
+
+#include <boost/bind.hpp>
 
 /**
  * Server implementation
@@ -36,32 +33,31 @@ Server::Server(const std::string &address, const uint16_t port,
   acceptor.bind(endpoint);
   acceptor.listen();
 
-  StartServer();
+  AcceptOnce();
 }
 
-void Server::StartServer() {
+Server::~Server() { std::cout << "Bye~" << std::endl; }
+
+void Server::AcceptOnce() {
   handler_ptr new_handler(
-      new HttpRequestHandler(&io_context, &map_handler_list, session_count));
+      new HttpRequestHandler(&io_context, this, session_count));
   ++session_count;
 
-  acceptor.async_accept(*new_handler->GetSocket(),
-                        boost::bind(&Server::HandleAccept, this, new_handler,
-                                    boost::asio::placeholders::error));
+  acceptor.async_accept(
+      *new_handler->GetSocket(),
+      boost::bind(&Server::HandleAccept, this, new_handler.release(),
+                  boost::asio::placeholders::error));
 }
 
 void Server::Run() {
-  if (max_thread_count > 1) {
-    std::vector<std::shared_ptr<std::thread>> threads;
-    for (std::size_t i = 0; i < max_thread_count; i++) {
-      std::shared_ptr<std::thread> thread =
-          std::make_shared<std::thread>([&]() { io_context.run(); });
-      threads.push_back(thread);
-    }
-    for (auto &&thread : threads) {
-      thread->join();
-    }
-  } else {
-    io_context.run();
+  std::vector<std::shared_ptr<std::thread>> threads;
+  for (std::size_t i = 0; i < max_thread_count; i++) {
+    std::shared_ptr<std::thread> thread =
+        std::make_shared<std::thread>([this]() { this->io_context.run(); });
+    threads.push_back(thread);
+  }
+  for (auto &&thread : threads) {
+    thread->join();
   }
 }
 
@@ -70,12 +66,14 @@ void Server::HandleAccept(handler_ptr handler,
   if (!acceptor.is_open()) {
     return;
   }
-
   if (!error) {
     handler->Start();
+    map_handler_list.insert(std::make_pair(handler->n_count, handler));
   }
-
-  StartServer();
+  AcceptOnce();
 }
 
-Server::~Server() { std::cout << "Bye~" << std::endl; }
+void Server::ReleaseHandler(const size_t n_count) {
+  auto it = map_handler_list.find(n_count);
+  map_handler_list.erase(it);
+}
