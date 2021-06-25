@@ -12,7 +12,18 @@
 #define _REQUESTHANDLER_H
 
 #include "HttpHandler.h"
+#include "HttpRequestPacket.h"
+#include "HttpResponsePacket.h"
 
-class RequestHandler : public HttpHandler {};
+// Basic RequestHandler, father of business handlers
+class RequestHandler {
+public:
+  RequestHandler() = default;
+
+public:
+  // Process Business Logic
+  virtual void ProcessBusinessLogic(const HttpRequestPacket& http_request_packet,
+                                  HttpResponsePacket* http_response_packet) = 0;
+};
 
 #endif  //_REQUESTHANDLER_H

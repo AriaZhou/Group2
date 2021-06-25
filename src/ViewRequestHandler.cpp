@@ -13,3 +13,12 @@
 /**
  * ViewRequestHandler implementation
  */
+
+void ViewRequestHandler::ProcessBusinessLogic(
+    const HttpRequestPacket& http_request_packet,
+    HttpResponsePacket* http_response_packet) {
+  std::string response_content = "{\"stock_name\":\"book\",\"stock_count\":3}";
+
+  http_response_packet->content = response_content;
+  http_response_packet->status_code = HttpResponsePacket::ok;
+}

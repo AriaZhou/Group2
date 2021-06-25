@@ -13,6 +13,15 @@
 
 #include "RequestHandler.h"
 
-class BuyRequestHandler : public RequestHandler {};
+// Handle purchase request, reduce inventory
+class BuyRequestHandler : public RequestHandler {
+public:
+  BuyRequestHandler() = default;
+
+public:
+  // Handle buy request, manage the stock
+  void ProcessBusinessLogic(const HttpRequestPacket& http_request_packet,
+                          HttpResponsePacket* http_response_packet) override;
+};
 
 #endif  //_BUYREQUESTHANDLER_H

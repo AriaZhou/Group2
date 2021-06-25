@@ -13,3 +13,12 @@
 /**
  * BuyRequestHandler implementation
  */
+
+void BuyRequestHandler::ProcessBusinessLogic(
+    const HttpRequestPacket& http_request_packet,
+    HttpResponsePacket* http_response_packet) {
+  std::string response_content = "{\"stock_name\":\"book\",\"stock_count\":2}";
+
+  http_response_packet->content = response_content;
+  http_response_packet->status_code = HttpResponsePacket::ok;
+}

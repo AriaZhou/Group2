@@ -13,6 +13,14 @@
 
 #include "RequestHandler.h"
 
-class ViewRequestHandler : public RequestHandler {};
+class ViewRequestHandler : public RequestHandler {
+public:
+  ViewRequestHandler() = default;
+
+public:
+  // Handle view request, show inventory status
+  void ProcessBusinessLogic(const HttpRequestPacket& http_request_packet,
+                          HttpResponsePacket* http_response_packet) override;
+};
 
 #endif  //_VIEWREQUESTHANDLER_H
