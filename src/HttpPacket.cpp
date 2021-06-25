@@ -13,5 +13,3 @@
 /**
  * HttpPacket implementation
  */
-
-HttpPacket::HttpPacket() {}
