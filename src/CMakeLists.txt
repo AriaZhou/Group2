@@ -4,11 +4,13 @@
 
 cmake_minimum_required(VERSION 3.14)
 
-add_executable(httpserver 
-  PUBLIC 
-    ${HEADER_FILE} 
-  PRIVATE 
-    ${SOURCE_FILE}
+add_executable(myhttpserver 
+  ${HEADER_FILE} 
+  ${MAIN_FILE} 
+  ${SOURCE_FILE}
 )
 
-target_include_directories(httpserver ${SRC_DIR}/include)
+target_include_directories(myhttpserver 
+  PUBLIC 
+    ${SRC_DIR}/include
+)

@@ -10,12 +10,13 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Variables
-set(SRC_DIR "${PROJECT_SOURCE_DIR}/src")
-set(TEST_DIR "${PROJECT_SOURCE_DIR}/test")
+set(SRC_DIR ${PROJECT_SOURCE_DIR}/src)
+set(TEST_DIR ${PROJECT_SOURCE_DIR}/test)
 
-file(GLOB SOURCE_FILE "$(SRC_DIR)/*.cpp")
-file(GLOB HEADER_FILE "$(SRC_DIR)/include/*.h")
-file(GLOB TEST_SOURCE_FILE "$(TEST_DIR)/*.cpp")
+file(GLOB SOURCE_FILE ${SRC_DIR}/*.cpp)
+file(GLOB HEADER_FILE ${SRC_DIR}/include/*.h)
+file(GLOB TEST_SOURCE_FILE ${TEST_DIR}/*.cpp)
+file(GLOB MAIN_FILE ${PROJECT_SOURCE_DIR}/main.cpp)
 
 # boost
 option(Boost_USE_STATIC_LIBS ON)
@@ -32,5 +33,5 @@ link_libraries(${PROJECT_NAME} ${Boost_LIBRARIES})
 add_subdirectory(${SRC_DIR})
 
 # build test
-enable_testing()
-add_subdirectory(${TEST_DIR})
+# enable_testing()
+# add_subdirectory(${TEST_DIR})
